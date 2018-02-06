@@ -7,13 +7,27 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node test.js"
+    "watch": "nodemon index.js",
+    "start": "concurrently \"npm run watch\" --names \"💻\" --prefix name",
+    "test": "node test.js",
+    "start:dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bcrypt-nodejs": "latest",
     "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "~1.4.3",
+    "dotenv": "^5.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
+    "express-session": "~1.14.1",
+    "method-override": "~2.3.6",
+    "moment": "^2.20.1",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.4.1",
+    "serve-favicon": "^2.4.5",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
