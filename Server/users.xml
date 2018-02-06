@@ -20,4 +20,9 @@
         <username>Krishant</username>
         <password>erdfcv34</password>
     </User>
+    <User>
+        <sso>43006134</sso>
+        <username>sujay</username>
+        <password>app123base</password>
+    </User>
 </Users>
