@@ -7,8 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "watch": "nodemon index.js",
-    "start": "concurrently \"npm run watch\" --names \"💻\" --prefix name",
+    "start":"node index.js",
     "test": "node test.js",
     "start:dev": "nodemon ./bin/www"
   },
