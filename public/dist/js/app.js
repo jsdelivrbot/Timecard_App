@@ -52,13 +52,31 @@ function handleSubmit() {
         },
         success: function (res, status, xhr, $form) {
             console.log('submit_TS : success' + 'triggerd');
-            console.log(res);
-            // cleanup(res);
+            // console.log(res);
+            cleanup(res);
         },
         error: function (e) {
-
+            alert('There was an error while recording your timesheets.\n Please connect with the admin to resolve the issue'); 
         }
     });
+}
+
+function cleanup(res = {rowCount : 0}) {
+    if(res.rowCount == effort_array.length){
+        effort_array = [];
+        $("#effortSummaryTable tbody").html('');
+        refresh_totals();
+        removeLoaderFor('effort_entry_form');
+        removeLoaderFor('summaryPanel');
+        if (effort_array.length > 0) {
+            $('#summaryPanel').show();
+        } else {
+            $('#summaryPanel').hide();
+        }
+        alert('Thankyou- Your Timesheet entries have been successfully recorded');
+    }else{
+        alert('There was an error while recording your timesheets.\n Please connect with the admin to resolve the issue'); 
+    }
 }
 
 function validateForm(date, sr_number, hrs_spent) {

@@ -97,7 +97,7 @@ module.exports = function(app,passport) {
         //   console.log(req.body['username']);
           console.log(req.body['effort']);
           
-        FT.getUserTasks(req.body['username'],req.body['effort'],(err,userTS) => {
+        ST.enterTS(req.body['username'],req.body['effort'],(err,userTS) => {
             if(!userTS){
                 res.status(400).send(err);
             }else{

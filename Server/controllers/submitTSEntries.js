@@ -3,9 +3,7 @@ const TSE= require ('../model/ts_entry')
     exports.enterTS = function(username, effortEntries, callback){
         // console.log(username);
 
-        // ts_entries = prepareTSEntries(username, effortEntries).toString();
-        ts_entries = `('2018-02-22','SR2315128',2),('2018-02-23','SR2315128',2)`;
-        console.log(effortEntries);
+        ts_entries = prepareTSEntries(username, effortEntries).toString();
         
         TSE.insertTSEntries(ts_entries, (err,res)=>{
             if (err) {

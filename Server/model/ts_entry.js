@@ -5,8 +5,7 @@ const db = require('../controllers/db');
 
 exports.insertTSEntries =  (ts_entries, DBdone)=>{
     const query = {
-        text: 'INSERT INTO "srtracker"."timesheet_entry"("date","srNumber","effortHrs") VALUES $1',
-        values: [ts_entries]
+        text: `INSERT INTO "srtracker"."timesheet_entry"("date","srNumber","effortHrs", "assignee") VALUES ${ts_entries} RETURNING *`
       }
       
     db.query(query, (err, res) => {
