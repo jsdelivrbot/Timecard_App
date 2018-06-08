@@ -14,6 +14,6 @@ exports.dumpObj = (obj) => obj;
 
 
 // Some details about the site
-exports.siteName = `Now That's Delicious!`;
+exports.siteName = `Time Tracker`;
 
 exports.sideMenu = [];
