@@ -21,7 +21,13 @@
         // console.log('abc');
     </script>
     <!-- Custom Core app JavaScript -->
+    
     <script src="/dist/js/app.js"></script>
+    <%  if (currentPath.startsWith('/home')) {%> <script src="/dist/js/home.js"></script> <%}%>
+    <%  if (currentPath.startsWith('/viewEditlogs')) {%> <script src="/dist/js/viewEditlogs.js"></script> <%}%>
+    
+    
+    
 
     <!-- Moment JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
