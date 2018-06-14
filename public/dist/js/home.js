@@ -8,7 +8,7 @@ var effort_array = [];
 $(document).ready(function () {
     // console.log(user.name);
     populateDateSelector();
-    const selectDate = document.querySelector('#selectDate');
+    const selectDate = document.querySelector('#dateTmst');
     const selectTask = document.querySelector('#selectTask');
 
     $("#sr").hide();
@@ -16,10 +16,12 @@ $(document).ready(function () {
 
     selectDate.addEventListener('change', () => {
         // console.log('change'+'triggerd');
-        if (selectDate.selectedIndex > 0) {
+        
+        // if (selectDate.selectedIndex > 0) {
+        if (selectDate.value != "" ) {
             $("#sr").hide();
             // console.log(selectDate.options[selectDate.selectedIndex].value);
-            fetchTasks(user.name, selectDate.options[selectDate.selectedIndex].value);
+            fetchTasks(user.name, selectDate.value);
         }
     });
 
@@ -301,17 +303,19 @@ function showSRInfo(SR) {
 }
 
 function populateDateSelector() {
-    const startDate = moment().subtract(3, 'days'); //.format("MMM Do YY");
+    const dateTmst = $('#dateTmst');
+    // const startDate = moment().subtract(3, 'days'); //.format("MMM Do YY");
     const endDate = moment();
 
-    var day = startDate;
+    dateTmst.attr("max", endDate.format("YYYY-MM-DD"));
+    // var day = startDate;
 
-    do {
-        const dateOption = `<option value="${day.format("YYYY-M-D")}">${day.format("MMM Do YY")}</option>`
-        $("#selectDate").append(dateOption);
-        day = day.add(1, 'd');
+    // do {
+    //     const dateOption = `<option value="${day.format("YYYY-M-D")}">${day.format("MMM Do YY")}</option>`
+    //     $("#selectDate").append(dateOption);
+    //     day = day.add(1, 'd');
 
-    }
-    while (day <= endDate);
+    // }
+    // while (day <= endDate);
 
 }
