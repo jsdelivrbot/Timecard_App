@@ -98,7 +98,7 @@ function validateForm(date, sr_number, hrs_spent) {
 
 function handleSave() {
 
-    const date = $('#selectDate option:selected').val();
+    const date = $('#dateTmst').val();
     const sr_number = $('#selectTask option:selected').val();
     const hrs_spent = $('#hrsTmst').val();
     if(!validateForm(date, sr_number, hrs_spent)){
@@ -130,7 +130,7 @@ function refresh_totals() {
     
     date_tot_array = effort_array.reduce((tot_array,effort)=>{
         //check if the given array has the total for given effort date 
-        total = tot_array.find((date)=> date[`date`] == effort.date);
+        total = tot_array.find((tot_item)=> tot_item[`date`] == effort.date);
 
         //if not
         if(!total){
@@ -138,12 +138,12 @@ function refresh_totals() {
             total = {};
             total[`date`]=effort.date;//set the date to the date of given effort object
             total[`total`]=effort.hrs_spent; //set the total hrs to that of given effort object
-            total[`minFlag`]=  (parseFloat(effort.hrs_spent) >= 8) ? true : false;
+            total[`minFlag`]=  true;//(parseFloat(effort.hrs_spent) >= 8) ? true : false;
             tot_array.push(total); //push the newly formed total to the array
         }else{
             //if total was found then we add the hrs from given effort object to the previous total
             total.total +=  effort.hrs_spent;
-            total.minFlag =  (parseFloat(total.total) >= 8) ? true : false;
+            total.minFlag =  true;//(parseFloat(total.total) >= 8) ? true : false;
         } 
         // new_tot = tot_array.find((tot)=> tot[`date`] == effort.date);
         
@@ -161,15 +161,7 @@ function refresh_totals() {
 
       toggleSubmit()
 
-    //   date_totals_markup = JSON.stringify(date_tot_array);
-    //   date_totals_markup = date_totals_markup.replace('{','<tr><td>');
-    //   date_totals_markup = date_totals_markup.replace(':','</td><td>');
-    //   date_totals_markup = date_totals_markup.replace(',','</td><tr>');
-    //   date_totals_markup = date_totals_markup.replace('}','</td></tr>');
-    //   date_totals_markup = date_totals_markup.replace('"','');
-      
-    //   $('#dateSummaryTable tbody').html('');
-    //   $('#dateSummaryTable tbody').append(date_totals_markup);
+    
 
 
 }
