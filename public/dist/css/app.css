@@ -8,6 +8,7 @@
     right: 0px;
     margin-left: 16px;
     margin-right: 16px;
+    padding-bottom: 16px;
     color: #000000;
     background: #00000041 url(/images/loader.gif) center center no-repeat;
     z-index: 1000;
