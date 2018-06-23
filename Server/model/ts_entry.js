@@ -36,3 +36,39 @@ exports.findTSEntriesOnDate =  (assignee, date, DBdone)=>{
         }
     });
 };
+
+//update ts_entry based on user,task,date
+exports.updateTSEntries =  (assignee, date, task,hrs,DBdone)=>{
+    const query = {
+        text: 'UPDATE srtracker.timesheet_entry SET "effortHrs"=$4 WHERE UPPER(assignee)=UPPER($1) and date::timestamp::date = $2 and "srNumber"=$3 RETURNING *' ,
+        values: [assignee, date,task,hrs]
+      }
+      
+    db.query(query, (err, res) => {
+        if (err) {
+            console.log(err);
+
+            return DBdone(err, null);
+        } else {
+            return DBdone(null,res);
+        }
+    });
+};
+
+//delete ts_entry based on user,task,date
+exports.deleteTSEntries =  (assignee, date, task,DBdone)=>{
+    const query = {
+        text: 'DELETE FROM srtracker.timesheet_entry WHERE UPPER(assignee)=UPPER($1) and date::timestamp::date = $2 and "srNumber"=$3' ,
+        values: [assignee, date,task]
+      }
+      
+    db.query(query, (err, res) => {
+        if (err) {
+            console.log(err);
+
+            return DBdone(err, null);
+        } else {
+            return DBdone(null,res);
+        }
+    });
+};
