@@ -2,6 +2,8 @@
 var FT = require('./controllers/fetchTasks');
 var FTSE = require('./controllers/fetchTSEntries');
 var ST = require('./controllers/submitTSEntries');
+var UT = require('./controllers/updateTSEntries');
+var DT = require('./controllers/deleteTSEntries');
 
 module.exports = function (app, passport) {
 
@@ -128,6 +130,48 @@ module.exports = function (app, passport) {
         console.log(req.body['effort']);
 
         ST.enterTS(req.body['username'], req.body['effort'], (err, userTS) => {
+            if (!userTS) {
+                res.status(400).send(err);
+            } else {
+                res.status(200).send(userTS);
+            }
+        });
+
+
+    });
+
+    // =====================================
+    // update TS Entries ===================
+    // =====================================
+    app.post('/update_TS', function (req, res) {
+
+        // {"effortHrs":"2","srNumber":"SR2315131","username":"Mayur Devgaonkar","date":"2018-10-01"}
+        assignee=req.body['username'];
+        date=req.body['date'];
+        task=req.body['srNumber'];
+        hrs=req.body['effortHrs']
+        UT.updateTS(assignee, date, task,hrs, (err, userTS) => {
+            if (!userTS) {
+                res.status(400).send(err);
+            } else {
+                res.status(200).send(userTS);
+            }
+        });
+
+
+    });
+
+    // =====================================
+    // Delete TS Entries ===================
+    // =====================================
+    app.post('/delete_TS', function (req, res) {
+
+        // {"effortHrs":"2","srNumber":"SR2315131","username":"Mayur Devgaonkar","date":"2018-10-01"}
+        assignee=req.body['username'];
+        date=req.body['date'];
+        task=req.body['srNumber'];
+        DT.deleteTS(assignee, date, task, (err, userTS) => {
+            // console.log(userTS);            
             if (!userTS) {
                 res.status(400).send(err);
             } else {
