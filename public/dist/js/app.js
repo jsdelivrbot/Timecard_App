@@ -45,3 +45,9 @@ function show_alert(alert_string, alert_type, alert_timeout) {
     }, alert_timeout);
 
 }
+
+function changeConfimationModal(confimation_dialog, btn_positive, btn_negative){
+    $('#confirm_body').html(confimation_dialog);
+    $('#confirm_btn_positive').html(btn_positive);
+    $('#confirm_btn_negative').html(btn_negative);
+}
