@@ -1,9 +1,9 @@
 const sr= require ('../model/sr_ticket')
     
-    exports.getUserTasks = function(username, date, callback){
+    exports.getUserTasks = function(username, sso, date, callback){
         // console.log(username);
         
-        sr.findSrOnAssignee(username, date, (err,res)=>{
+        sr.findSrOnAssignee(username, sso, date, (err,res)=>{
             if (err) {
                 return callback(err, null);
             } else {
