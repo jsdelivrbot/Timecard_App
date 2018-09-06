@@ -1,7 +1,7 @@
 const TSE= require ('../model/ts_entry')
     
-    exports.deleteTS = function(assignee, date, task, callback){
-        TSE.deleteTSEntries(assignee, date, task, (err,res)=>{
+    exports.deleteTS = function(assignee, sso, date, task, callback){
+        TSE.deleteTSEntries(assignee, sso, date, task, (err,res)=>{
             if (err) {
                 return callback(err, null);
             } else {
