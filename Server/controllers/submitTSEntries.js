@@ -1,9 +1,9 @@
 const TSE= require ('../model/ts_entry')
     
-    exports.enterTS = function(username, effortEntries, callback){
+    exports.enterTS = function(username,sso, effortEntries, callback){
         // console.log(username);
 
-        ts_entries = prepareTSEntries(username, effortEntries).toString();
+        ts_entries = prepareTSEntries(username, sso, effortEntries).toString();
         
         TSE.insertTSEntries(ts_entries, (err,res)=>{
             if (err) {
@@ -15,14 +15,15 @@ const TSE= require ('../model/ts_entry')
         });
     }
 
-    function prepareTSEntries(username, effortEntries) {
+    function prepareTSEntries(username,sso, effortEntries) {
         ts_entries = effortEntries.reduce((tse, eff_ent)=>{
 
             tse_str = '(';
             tse_str += `'${eff_ent.date}',`;
             tse_str += `'${eff_ent.sr_number}',`;
             tse_str += `${eff_ent.hrs_spent},`;
-            tse_str += `'${username}'`;
+            tse_str += `'${username}',`;
+            tse_str += `'${sso}'`;
             tse_str += ')';
             console.log(tse_str);
             
