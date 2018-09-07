@@ -1,7 +1,7 @@
 const TSE= require ('../model/ts_entry')
     
-    exports.updateTS = function(assignee, date, task,hrs, callback){
-        TSE.updateTSEntries(assignee, date, task,hrs, (err,res)=>{
+    exports.updateTS = function(assignee, sso, date, task,hrs, callback){
+        TSE.updateTSEntries(assignee, sso, date, task,hrs, (err,res)=>{
             if (err) {
                 return callback(err, null);
             } else {
