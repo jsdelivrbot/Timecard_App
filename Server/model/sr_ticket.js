@@ -24,13 +24,13 @@ exports.findSrOnNumber =  (assignee, DBdone)=>{
 };
 
 // find all OPEN and todays closed  sr  based on assignee 
-exports.findSrOnAssignee =  (assignee, date, DBdone)=>{
+exports.findSrOnAssignee =  (assignee, sso, date, DBdone)=>{
     const query = {
         // text: 'SELECT * FROM srtracker.sr_dim WHERE assignee=$1 and status =\'OPEN\' UNION select * from srtracker.SR_DIM where assignee=$1 and status = \'CLOSED\' and last_update_date::timestamp::date = $2',
-        text: 'SELECT * FROM (SELECT * FROM srtracker.sr_dim WHERE UPPER(assignee)=upper($1) and status =\'OPEN\' UNION select * from srtracker.SR_DIM where UPPER(assignee)=upper($1) and status = \'CLOSED\' and last_update_date::timestamp::date = $2) ALL_SR WHERE sr_number NOT IN (select "srNumber" from srtracker.timesheet_entry where date::timestamp::date = $2 )',
+        text: 'SELECT * FROM (SELECT * FROM srtracker.sr_dim WHERE assignee_sso=$1 and status =\'OPEN\' UNION select * from srtracker.SR_DIM where assignee_sso=$1 and status = \'CLOSED\' and last_update_date::timestamp::date = $2) ALL_SR WHERE sr_number NOT IN (select "srNumber" from srtracker.timesheet_entry where date::timestamp::date = $2 )',
         //SELECT * FROM (SELECT * FROM srtracker.sr_dim WHERE UPPER(assignee)=upper($1) and status ='OPEN' UNION select * from srtracker.SR_DIM where UPPER(assignee)=upper($1) and status = 'CLOSED' and last_update_date::timestamp::date = $2) ALL_SR WHERE sr_number NOT IN (select "srNumber" from srtracker.timesheet_entry where date::timestamp::date = $2 )
         //SELECT * FROM (SELECT * FROM srtracker.sr_dim WHERE UPPER(assignee)=upper('Mayur Devgaonkar') and status ='OPEN' UNION select * from srtracker.SR_DIM where UPPER(assignee)=upper('Mayur Devgaonkar') and status = 'CLOSED' and last_update_date::timestamp::date = '2018-10-02') ALL_SR WHERE sr_number NOT IN (select "srNumber" from srtracker.timesheet_entry where date::timestamp::date = '2018-10-02' )
-        values: [assignee, date]
+        values: [sso, date]
       }
       
     db.query(query, (err, res) => {
