@@ -26,7 +26,7 @@ exports.findUser =  (sso, DBdone)=>{
 exports.insertNewUser = (newUser, DBdone)=>{
     // console.log(newUser);
     
-    db.query(`INSERT INTO "srtracker"."resc_dim"("name","sso","recrd_crrnt_ind","password") VALUES ($1,$2,'T',$3) RETURNING *`, [newUser.name, newUser.sso, newUser.password], (err, res) => {
+    db.query(`INSERT INTO "srtracker"."resc_dim"("name","sso","recrd_crrnt_ind","password") VALUES ($1,$2,'T',$3)`, [newUser.name, newUser.sso, newUser.password], (err, res) => {
         if (err) {
             return DBdone(err, null);
         } else {
