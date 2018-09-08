@@ -95,8 +95,10 @@ module.exports = function (app, passport) {
     app.post('/fetchTasks', function (req, res) {
         //   console.log(req.body['username']);
         //   console.log(req.body['date']);
-
-        FT.getUserTasks(req.body['username'], req.body['date'], (err, userTasks) => {
+        let username = req.body['username'];
+        let sso = req.body['sso'];
+        let date = req.body['date'];
+        FT.getUserTasks(username, sso, date, (err, userTasks) => {
             if (!userTasks) {
                 res.status(400).send(err);
             } else {
@@ -112,8 +114,9 @@ module.exports = function (app, passport) {
     app.post('/fetchTSEntries', function (req, res) {
         //   console.log(req.body['username']);
         //   console.log(req.body['date']);
-
-        FTSE.getUserTSEntries(req.body['username'], req.body['date'], (err, userTSEntries) => {
+        let username = req.body['username'];
+        let sso = req.body['sso'];
+        FTSE.getUserTSEntries(username, sso, req.body['date'], (err, userTSEntries) => {
             if (!userTSEntries) {
                 res.status(400).send(err);
             } else {
@@ -128,8 +131,10 @@ module.exports = function (app, passport) {
     app.post('/submit_TS', function (req, res) {
         //   console.log(req.body['username']);
         console.log(req.body['effort']);
+        let username = req.body['username'];
+        let sso = req.body['sso'];
 
-        ST.enterTS(req.body['username'], req.body['effort'], (err, userTS) => {
+        ST.enterTS(username, sso, req.body['effort'], (err, userTS) => {
             if (!userTS) {
                 res.status(400).send(err);
             } else {
@@ -146,11 +151,14 @@ module.exports = function (app, passport) {
     app.post('/update_TS', function (req, res) {
 
         // {"effortHrs":"2","srNumber":"SR2315131","username":"Mayur Devgaonkar","date":"2018-10-01"}
-        assignee=req.body['username'];
+        
+        let username = req.body['username'];
+        let sso = req.body['sso'];
+        assignee=username;
         date=req.body['date'];
         task=req.body['srNumber'];
         hrs=req.body['effortHrs']
-        UT.updateTS(assignee, date, task,hrs, (err, userTS) => {
+        UT.updateTS(assignee,sso, date, task,hrs, (err, userTS) => {
             if (!userTS) {
                 res.status(400).send(err);
             } else {
@@ -167,10 +175,12 @@ module.exports = function (app, passport) {
     app.post('/delete_TS', function (req, res) {
 
         // {"effortHrs":"2","srNumber":"SR2315131","username":"Mayur Devgaonkar","date":"2018-10-01"}
-        assignee=req.body['username'];
+        let username = req.body['username'];
+        let sso = req.body['sso'];
+        assignee=username;
         date=req.body['date'];
         task=req.body['srNumber'];
-        DT.deleteTS(assignee, date, task, (err, userTS) => {
+        DT.deleteTS(assignee, sso, date, task, (err, userTS) => {
             // console.log(userTS);            
             if (!userTS) {
                 res.status(400).send(err);
