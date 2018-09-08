@@ -5,7 +5,7 @@ const db = require('../controllers/db');
 
 exports.insertTSEntries =  (ts_entries, DBdone)=>{
     const query = {
-        text: `INSERT INTO "srtracker"."timesheet_entry"("date","srNumber","effortHrs", "assignee") VALUES ${ts_entries} RETURNING *`
+        text: `INSERT INTO "srtracker"."timesheet_entry"("date","srNumber","effortHrs", "assignee","assignee_sso") VALUES ${ts_entries}`
       }
       
     db.query(query, (err, res) => {
@@ -20,10 +20,10 @@ exports.insertTSEntries =  (ts_entries, DBdone)=>{
 };
 
 // find all ts_entries based on assignee and date 
-exports.findTSEntriesOnDate =  (assignee, date, DBdone)=>{
+exports.findTSEntriesOnDate =  (assignee, sso, date, DBdone)=>{
     const query = {
-        text: 'SELECT * FROM srtracker.timesheet_entry WHERE assignee=$1 and date::timestamp::date = $2',
-        values: [assignee, date]
+        text: 'SELECT * FROM srtracker.timesheet_entry WHERE assignee_sso=$1 and date::timestamp::date = $2',
+        values: [sso, date]
       }
       
     db.query(query, (err, res) => {
@@ -38,10 +38,10 @@ exports.findTSEntriesOnDate =  (assignee, date, DBdone)=>{
 };
 
 //update ts_entry based on user,task,date
-exports.updateTSEntries =  (assignee, date, task,hrs,DBdone)=>{
+exports.updateTSEntries =  (assignee, sso, date, task,hrs,DBdone)=>{
     const query = {
-        text: 'UPDATE srtracker.timesheet_entry SET "effortHrs"=$4 WHERE UPPER(assignee)=UPPER($1) and date::timestamp::date = $2 and "srNumber"=$3 RETURNING *' ,
-        values: [assignee, date,task,hrs]
+        text: 'UPDATE srtracker.timesheet_entry SET "effortHrs"=$3 WHERE assignee_sso=$4 and date::timestamp::date = $1 and "srNumber"=$2' ,
+        values: [date,task,hrs, sso]
       }
       
     db.query(query, (err, res) => {
@@ -56,10 +56,10 @@ exports.updateTSEntries =  (assignee, date, task,hrs,DBdone)=>{
 };
 
 //delete ts_entry based on user,task,date
-exports.deleteTSEntries =  (assignee, date, task,DBdone)=>{
+exports.deleteTSEntries =  (assignee,sso,  date, task,DBdone)=>{
     const query = {
-        text: 'DELETE FROM srtracker.timesheet_entry WHERE UPPER(assignee)=UPPER($1) and date::timestamp::date = $2 and "srNumber"=$3' ,
-        values: [assignee, date,task]
+        text: 'DELETE FROM srtracker.timesheet_entry WHERE assignee_sso=$3 and date::timestamp::date = $1 and "srNumber"=$2' ,
+        values: [date,task,sso]
       }
       
     db.query(query, (err, res) => {
