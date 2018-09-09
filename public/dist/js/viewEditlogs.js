@@ -17,15 +17,15 @@ $(document).ready(function () {
             // console.log(selectDate.options[selectDate.selectedIndex].value);
             selected_date = eff_date_sel.value;
             $("#selected_date_td").html(`${selected_date}`);
-            fetchTSEntries(user.name, eff_date_sel.value);
-            fetchTasks(user.name, eff_date_sel.value)
+            fetchTSEntries(user.name, user.sso, eff_date_sel.value);
+            fetchTasks(user.name, user.sso, eff_date_sel.value)
         }
     });
 
 
 });
 
-function fetchTasks(name, date) {
+function fetchTasks(name,sso, date) {
     showLoaderFor('effort_entry_form');
     console.log('fetchTasks' + 'triggerd');
     $.ajax({
@@ -33,6 +33,7 @@ function fetchTasks(name, date) {
         type: "POST",
         data: {
             username: name,
+            sso:sso,
             date: date
         },
         success: function (res, status, xhr, $form) {
@@ -61,7 +62,7 @@ function addTasksToSelect(res) {
 
 }
 
-function fetchTSEntries(name, date) {
+function fetchTSEntries(name,sso, date) {
     showLoaderFor('effort_dt_sel');
     console.log('fetchTSEntries ' + 'triggerd');
     $.ajax({
@@ -69,6 +70,7 @@ function fetchTSEntries(name, date) {
         type: "POST",
         data: {
             username: name,
+            sso:sso,
             date: date
         },
         success: function (res, status, xhr, $form) {
@@ -125,6 +127,7 @@ function handleSave(user, effort) {
         type: "POST",
         data: {
             username: user.name,
+            sso:user.sso,
             effort: [effort]
         },
         success: function (res, status, xhr, $form) {
@@ -133,7 +136,7 @@ function handleSave(user, effort) {
             show_alert("Time entry saved", "success", 4000);
             removeLoaderFor('effort_entry_form');
             removeLoaderFor('effort_dt_sel');
-            fetchTSEntries(user.name, selected_date);
+            fetchTSEntries(user.name, user.sso, selected_date);
             clearTimeEntryForm();
         },
         error: function (e) {
@@ -157,7 +160,7 @@ function validateNewEntry(sr_number, hrs_spent) {
 
 function clearTimeEntryForm() {
     $('#hrsTmst').val('');
-    fetchTasks(user.name, selected_date);
+    fetchTasks(user.name,user.sso, selected_date);
 }
 
 $(document).on('click', '.btn_edit', function (event) {
@@ -262,9 +265,8 @@ $(document).on('click', '.btn_save', function (event) {
 
     //use the "arr"	object for your ajax call
     $.extend(arr, {
-        username: user.name
-    });
-    $.extend(arr, {
+        username: user.name,
+        sso:user.sso,
         date: selected_date
     });
     console.log(arr);
@@ -313,9 +315,8 @@ $(document).on('click', '.btn_delete', function (event) {
 
             //use the "del_arr"	object for your ajax call
             $.extend(del_arr, {
-                username: user.name
-            });
-            $.extend(del_arr, {
+                username: user.name,
+                sso:user.sso,
                 date: selected_date
             });
             console.log(del_arr);
@@ -365,6 +366,7 @@ function handleUpdate(updated_effort) {
         type: "POST",
         data: {
             username: user.name,
+            sso:user.sso,
             date: updated_effort.date,
             srNumber: updated_effort.srNumber,
             effortHrs: updated_effort.effortHrs
@@ -375,7 +377,7 @@ function handleUpdate(updated_effort) {
             show_alert("Time entry updated", "success", 4000);
             removeLoaderFor('effort_entry_form');
             removeLoaderFor('effort_dt_sel');
-            fetchTSEntries(user.name, selected_date);
+            fetchTSEntries(user.name, user.sso, selected_date);
             clearTimeEntryForm();
         },
         error: function (e) {
@@ -394,6 +396,7 @@ function handleDelete(delete_effort) {
         type: "POST",
         data: {
             username: user.name,
+            sso:user.sso,
             date: delete_effort.date,
             srNumber: delete_effort.srNumber
         },
@@ -403,7 +406,7 @@ function handleDelete(delete_effort) {
             show_alert("Time entry deleted", "success", 4000);
             removeLoaderFor('effort_entry_form');
             removeLoaderFor('effort_dt_sel');
-            fetchTSEntries(user.name, selected_date);
+            fetchTSEntries(user.name,user.sso, selected_date);
             clearTimeEntryForm();
         },
         error: function (e) {
