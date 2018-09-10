@@ -14,7 +14,7 @@ exports.validPassword = function(password, hashedPassword) {
 
 // we are checking to see if the user trying to login already exists
 exports.findUser =  (sso, DBdone)=>{
-    db.query('SELECT * FROM srtracker.resc_dim WHERE sso=$1', [sso], (err, res) => {
+    db.query(`SELECT * FROM srtracker.resc_dim WHERE sso=$1`, [sso], (err, res) => {
         if (err) {
             return DBdone(err, null);
         } else {
