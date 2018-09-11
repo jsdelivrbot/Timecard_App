@@ -51,3 +51,7 @@ function changeConfimationModal(confimation_dialog, btn_positive, btn_negative){
     $('#confirm_btn_positive').html(btn_positive);
     $('#confirm_btn_negative').html(btn_negative);
 }
+
+
+function noenter() {
+    return !(window.event && window.event.keyCode == 13); }
