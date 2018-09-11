@@ -1,8 +1,10 @@
 var selected_date;
-var SR_array = [];
+var TASK_array = [];
 var TSE_array = [];
 
 $(document).ready(function () {
+    console.log('begin');
+    
     $('#effort_entries_list').hide();
     $('#effort_entry_form').hide();
 
@@ -51,19 +53,20 @@ function addTasksToSelect(res) {
     tasks = res;
     // console.log(tasks);
 
-    SR_array = [];
+    TASK_array = [];
     $("#selectTask").children('option:not(:first)').remove();
-    tasks.rows.forEach(SR => {
-        SR_array.push(SR);
-        $("#selectTask").append('<option value="' + SR.sr_number + '">' + SR.sr_number + '</option>');
+    tasks.rows.forEach(TASK => {
+        TASK_array.push(TASK);
+        $("#selectTask").append('<option value="' + TASK.task + '">' + TASK.task + '</option>');
     });
-    // console.log(SR_array);
+    // console.log(TASK_array);
     removeLoaderFor('effort_entry_form');
 
 }
 
 function fetchTSEntries(name,sso, date) {
     showLoaderFor('effort_dt_sel');
+    showLoaderFor('effort_entries_list');
     console.log('fetchTSEntries ' + 'triggerd');
     $.ajax({
         url: "/fetchTSEntries",
@@ -94,7 +97,7 @@ function addTSEntriesToList(res) {
         TSE_array.push(TSE);
         var row_id = random_id();
         markup = '<tr row_id="' + row_id + '">' +
-            '<td><div class="row_SR_Num" col_name="srNumber">' + TSE.srNumber + '</td>' +
+            '<td><div class="row_SR_Num" col_name="srNumber">' + TSE.task + '</td>' +
             '<td><div class="row_data" edit_type="click" col_name="effortHrs">' + TSE.effortHrs + '</td>'
             // show edit and delete button
             +
@@ -110,7 +113,7 @@ function addTSEntriesToList(res) {
         $(document).find('.btn_cancel').hide();
     });
 
-    // console.log(SR_array);
+    // console.log(TASK_array);
     removeLoaderFor('effort_dt_sel');
     removeLoaderFor('effort_entries_list')
 
@@ -270,12 +273,14 @@ $(document).on('click', '.btn_save', function (event) {
         date: selected_date
     });
     console.log(arr);
-
-    //out put to show
-    // show_alert(JSON.stringify(arr), 'success', 4000)
-    // $('.post_msg').html('<pre class="bg-success">' + JSON.stringify(arr, null, 2) + '</pre>');
-
-    handleUpdate(arr);
+    if (arr.effortHrs > 0 && arr.effortHrs<=24) {
+        //out put to show
+        // show_alert(JSON.stringify(arr), 'success', 4000)
+        // $('.post_msg').html('<pre class="bg-success">' + JSON.stringify(arr, null, 2) + '</pre>');
+        handleUpdate(arr);
+    } else {
+        show_alert('hours should be between 0 and 24', 'danger', 4000);
+    }
 
 
 
