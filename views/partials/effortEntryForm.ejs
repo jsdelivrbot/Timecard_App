@@ -15,7 +15,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <input type="date" class="form-control" id="dateTmst" name="dateTmst" required>
+                        <input type="date" class="form-control" id="dateTmst" name="dateTmst" required onkeypress="return noenter()">
 <!--                         
                         <select class="form-control" id="selectDate">
                             <option value="0">Select Date</option>
@@ -29,7 +29,7 @@
                     </div>
                     </td>
                     <td>
-                        <input type="text" pattern="\d*" maxlength="2" class="form-control" id="hrsTmst" name="hrsTmst" required>
+                        <input type="text" pattern="\d*" maxlength="2" class="form-control" id="hrsTmst" name="hrsTmst" required onkeypress="return noenter()">
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary btn-sm" id="save">Save</button>
